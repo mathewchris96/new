@@ -46,6 +46,7 @@
                             
                             const downloadButton = document.createElement('button');
                             downloadButton.innerText = 'Download Compressed Image';
+                            downloadButton.style.backgroundColor = getComputedStyle(document.getElementById('compressButton')).backgroundColor;  // Set the same background color as the compress button
                             downloadButton.onclick = function() {
                                 const a = document.createElement('a');
                                 a.href = url;
