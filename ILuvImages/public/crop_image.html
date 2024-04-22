@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Image - ILuvImages</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Crop Your Image</h1>
+        </div>
+        <div class="manipulation-page">
+            <input type="file" id="uploadImage" class="upload-input" accept="image/*">
+            <canvas id="imageCanvas"></canvas>
+            <button id="cropButton" class="action-button">Crop Image</button>
+            <button id="downloadButton" class="action-button" style="display:none;">Download Cropped Image</button>
+        </div>
+    </div>
+    <script>
+        const uploadImage = document.getElementById('uploadImage');
+        const cropButton = document.getElementById('cropButton');
+        const downloadButton = document.getElementById('downloadButton');
+        const canvas = document.getElementById('imageCanvas');
+        const ctx = canvas.getContext('2d');
+        let image = new Image();
+        let startX, startY, endX, endY;
+        let isDown = false;
+
+        uploadImage.addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                image.onload = function() {
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    ctx.drawImage(image, 0, 0);
+                }
+                image.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        canvas.addEventListener('mousedown', function(e) {
+            startX = e.offsetX;
+            startY = e.offsetY;
+            isDown = true;
+        });
+
+        canvas.addEventListener('mouseup', function(e) {
+            if (isDown) {
+                endX = e.offsetX;
+                endY = e.offsetY;
+                isDown = false;
+                cropImage();
+            }
+        });
+
+        function cropImage() {
+            const width = endX - startX;
+            const height = endY - startY;
+            const croppedImage = ctx.getImageData(startX, startY, width, height);
+            canvas.width = width;
+            canvas.height = height;
+            ctx.putImageData(croppedImage, 0, 0);
+            downloadButton.style.display = 'block';
+        }
+
+        downloadButton.addEventListener('click', function() {
+            const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            const link = document.createElement('a');
+            link.download = 'cropped-image.png';
+            link.href = image;
+            link.click();
+        });
+    </script>
+</body>
+</html>

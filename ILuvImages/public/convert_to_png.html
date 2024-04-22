@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert to PNG - ILuvImages</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Convert Image to PNG Format</h1>
+        </div>
+        <div class="manipulation-page">
+            <form id="conversionForm" class="manipulation-form">
+                <input type="file" id="imageInput" class="input-field" accept="image/jpeg">
+                <button type="button" id="convertButton" class="action-button">Convert to PNG</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('convertButton').addEventListener('click', function() {
+            const input = document.getElementById('imageInput');
+            if(input.files.length === 0) {
+                alert('Please select a JPG image to convert.');
+                return;
+            }
+            const file = input.files[0];
+            if(file.type !== 'image/jpeg') {
+                alert('Please select a JPG image.');
+                return;
+            }
+            // Assuming the server provides an API endpoint '/api/convert-to-png' for conversion
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetch('/api/convert-to-png', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name.replace(/\.[^/.]+$/, "") + ".png"; // Change file extension to .png
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                alert('Conversion successful!');
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                alert('Failed to convert the image.');
+            });
+        });
+    </script>
+</body>
+</html>
