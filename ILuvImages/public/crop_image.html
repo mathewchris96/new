@@ -27,14 +27,18 @@
         let image = new Image();
         let startX, startY, endX, endY;
         let isDown = false;
+        
+        function redrawImage() {
+            canvas.width = image.width;
+            canvas.height = image.height;
+            ctx.drawImage(image, 0, 0);
+        }
 
         uploadImage.addEventListener('change', function(e) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 image.onload = function() {
-                    canvas.width = image.width;
-                    canvas.height = image.height;
-                    ctx.drawImage(image, 0, 0);
+                    redrawImage();
                 }
                 image.src = event.target.result;
             }
@@ -51,6 +55,7 @@
             if (isDown) {
                 endX = e.offsetX;
                 endY = e.offsetY;
+                redrawImage(); // Clear and redraw the image
                 drawSelectionBox(startX, startY, endX, endY);
             }
         });
@@ -60,6 +65,7 @@
                 endX = e.offsetX;
                 endY = e.offsetY;
                 isDown = false;
+                redrawImage(); // Clear and redraw the image
                 drawSelectionBox(startX, startY, endX, endY);
             }
         });
@@ -69,7 +75,8 @@
             const height = endY - startY;
             ctx.strokeStyle = 'red'; // Change the selection box outline color
             ctx.lineWidth = 2; // Change the selection box outline width
-            ctx.clearRect(startX, startY, width, height); // Clear the selection box area
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
+            ctx.drawImage(image, 0, 0); // Redraw the image
             ctx.strokeRect(startX, startY, width, height); // Draw the outline only
         }
 
@@ -88,10 +95,10 @@
         }
 
         downloadButton.addEventListener('click', function() {
-            const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            const croppedImage = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
             const link = document.createElement('a');
             link.download = 'cropped-image.png';
-            link.href = image;
+            link.href = croppedImage;
             link.click();
         });
     </script>
