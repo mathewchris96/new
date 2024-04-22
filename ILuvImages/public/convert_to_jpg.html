@@ -15,7 +15,11 @@
             <form id="convertToJpgForm" class="manipulation-form">
                 <input type="file" id="imageInput" class="input-field" accept="image/png">
                 <button type="button" id="convertButton" class="action-button">Convert to JPG</button>
+                <a id="downloadLink" style="display: none"></a>
             </form>
+            <div id="downloadSection" style="display: none">
+                <button onclick="downloadImage()">Download JPG Image</button>
+            </div>
         </div>
         <div class="manipulation-options">
             <button class="option-button" onclick="location.href='resize_image.html'">Resize Image</button>
@@ -41,9 +45,13 @@
             // Assuming a function convertImageToJPG exists to handle the conversion
             // This is a placeholder for actual conversion logic which would likely involve
             // sending the file to a server for processing and then downloading the result
-            convertImageToJPG(file).then(() => {
+            convertImageToJPG(file).then((result) => {
                 alert('Image has been converted to JPG format.');
-                // Code to download the converted image or display it to the user would go here
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = result;
+                downloadLink.download = 'converted_image.jpg';
+                downloadLink.style.display = 'block';
+                document.getElementById('downloadSection').style.display = 'block';
             }).catch(error => {
                 console.error('Error converting image:', error);
                 alert('Failed to convert image.');
@@ -56,8 +64,19 @@
             console.log('Converting', file.name, 'to JPG format...');
             await new Promise(resolve => setTimeout(resolve, 2000)); // Simulates conversion delay
             console.log(file.name, 'converted to JPG format.');
-            return Promise.resolve('Success'); // Simulates successful conversion
+            // Simulate a download link (Replace with actual generated link)
+            return Promise.resolve('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA//wAARCAFjAfIDAREAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTl...'); // Simulates successful conversion with base64 data
+        }
+
+        function downloadImage() {
+            const downloadLink = document.getElementById('downloadLink');
+            // Trigger the download of the converted image
+            const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+            downloadLink.dispatchEvent(clickEvent);
         }
     </script>
 </body>
-</html>
