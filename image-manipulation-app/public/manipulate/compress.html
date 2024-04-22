@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compression</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/upload.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Image Manipulation App</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="resize.html">Resize</a></li>
+                <li><a href="convert.html">Convert</a></li>
+                <li><a href="filter.html">Filter</a></li>
+                <li><a href="crop.html">Crop</a></li>
+                <li><a href="compress.html">Compress</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Compress Image</h2>
+        <form id="upload-form">
+            <div class="form-group">
+                <label for="file-input">Select image to compress:</label>
+                <input type="file" id="file-input" name="image" accept="image/jpeg, image/png">
+            </div>
+            <div class="form-group">
+                <label for="compression-level">Compression Level:</label>
+                <input type="range" id="compression-level" name="compression" min="0" max="100" value="50">
+            </div>
+            <button type="submit" class="btn">Upload and Compress</button>
+        </form>
+        <div id="result-section" style="display:none;">
+            <h3>Compressed Image</h3>
+            <img id="compressed-image" src="" alt="Compressed Image" style="max-width:100%;">
+            <a id="download-link" href="" download="compressed_image.jpg">Download Compressed Image</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const uploadForm = document.getElementById("upload-form");
+            const fileInput = document.getElementById("file-input");
+            const compressionLevelInput = document.getElementById("compression-level");
+            const resultSection = document.getElementById("result-section");
+            const compressedImage = document.getElementById("compressed-image");
+            const downloadLink = document.getElementById("download-link");
+
+            uploadForm.addEventListener("submit", async function(event) {
+                event.preventDefault();
+                const file = fileInput.files[0];
+                if (!file) {
+                    alert("Please select a file to compress.");
+                    return;
+                }
+
+                const compressionLevel = compressionLevelInput.value;
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('compressionLevel', compressionLevel);
+
+                try {
+                    const response = await fetch('/compress', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (!response.ok) throw new Error('Compression failed');
+
+                    const result = await response.json();
+                    compressedImage.src = result.compressedImageUrl;
+                    downloadLink.href = result.compressedImageUrl;
+                    resultSection.style.display = 'block';
+                    alert('Compression successful!');
+                } catch (error) {
+                    console.error('Error compressing file:', error);
+                    alert('Error compressing file. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

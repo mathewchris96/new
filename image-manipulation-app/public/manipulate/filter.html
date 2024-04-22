@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Filter</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/upload.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Image Manipulation App</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/manipulate/resize.html">Resize</a></li>
+                <li><a href="/manipulate/convert.html">Convert</a></li>
+                <li><a href="/manipulate/compress.html">Compress</a></li>
+                <li><a href="/manipulate/filter.html">Apply Filter</a></li>
+                <li><a href="/manipulate/crop.html">Crop</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Apply Black and White Filter</h2>
+        <form id="upload-form">
+            <div class="form-group">
+                <label for="file-input">Upload your image:</label>
+                <input type="file" id="file-input" name="image" accept="image/png, image/jpeg">
+            </div>
+            <button type="submit" class="btn">Upload Image</button>
+        </form>
+        <button id="apply-filter-btn" class="btn" style="display:none;">Apply Black and White Filter</button>
+        <div id="image-preview" class="form-group" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const uploadForm = document.getElementById("upload-form");
+            const fileInput = document.getElementById("file-input");
+            const applyFilterBtn = document.getElementById("apply-filter-btn");
+            const imagePreview = document.getElementById("image-preview");
+
+            uploadForm.addEventListener("submit", async function(event) {
+                event.preventDefault();
+                const file = fileInput.files[0];
+                if (!file) {
+                    alert("Please select an image to upload.");
+                    return;
+                }
+
+                const imageUrl = await uploadFile(file); // uploadFile function is defined in upload.js
+                if (imageUrl) {
+                    displayImageForFilter(imageUrl);
+                }
+            });
+
+            applyFilterBtn.addEventListener("click", function() {
+                const imgElement = document.querySelector("#image-preview img");
+                if (imgElement) {
+                    applyBlackAndWhiteFilter(imgElement);
+                }
+            });
+
+            function displayImageForFilter(imageUrl) {
+                imagePreview.innerHTML = `<img src="${imageUrl}" alt="Uploaded Image" style="max-width: 100%;">`;
+                applyFilterBtn.style.display = 'block';
+            }
+
+            function applyBlackAndWhiteFilter(imgElement) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = imgElement.width;
+                canvas.height = imgElement.height;
+
+                ctx.drawImage(imgElement, 0, 0, imgElement.width, imgElement.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+
+                for (let i = 0; i < data.length; i += 4) {
+                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    data[i] = avg; // red
+                    data[i + 1] = avg; // green
+                    data[i + 2] = avg; // blue
+                }
+
+                ctx.putImageData(imageData, 0, 0);
+
+                const filteredImageSrc = canvas.toDataURL("image/png");
+                imagePreview.innerHTML = `<img src="${filteredImageSrc}" alt="Filtered Image" style="max-width: 100%;">`;
+                const downloadLink = document.createElement('a');
+                downloadLink.href = filteredImageSrc;
+                downloadLink.download = 'filtered-image.png';
+                downloadLink.innerText = 'Download Filtered Image';
+                downloadLink.className = 'btn';
+                imagePreview.appendChild(downloadLink);
+            }
+        });
+    </script>
+</body>
+</html>
+```
