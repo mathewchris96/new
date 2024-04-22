@@ -1,0 +1,109 @@
+/* ILuvImages - Global Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  color: #333;
+}
+
+/* Upload Page Styles */
+.upload-container {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.upload-input {
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.upload-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #0056b3;
+}
+
+/* Manipulation Options Page Styles */
+.manipulation-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.option-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.option-button:hover {
+  background-color: #218838;
+}
+
+/* Individual Manipulation Pages Styles */
+.manipulation-page {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.manipulation-form {
+  margin: 20px auto;
+  max-width: 500px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.action-button {
+  background-color: #17a2b8;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #138496;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .manipulation-options {
+    flex-direction: column;
+  }
+}
