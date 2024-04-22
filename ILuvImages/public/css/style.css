@@ -3,12 +3,15 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
+  min-height: 100%;
+  position: relative;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  padding-bottom: 70px; /* Added padding bottom for footer */
 }
 
 .header {
@@ -107,3 +110,16 @@ body, html {
     flex-direction: column;
   }
 }
+
+/* Footer Styles */
+.footer {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  padding: 20px 0;
+  position: absolute;
+  bottom: 0; /* Positioned at the bottom of the page */
+  width: 100%; /* Full width */
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  font-weight: bold; /* Making the text bold */
