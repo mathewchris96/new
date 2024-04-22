@@ -15,6 +15,8 @@
             <form id="convertToJpgForm" class="manipulation-form">
                 <input type="file" id="imageInput" class="input-field" accept="image/png">
                 <button type="button" id="convertButton" class="action-button">Convert to JPG</button>
+                <!-- Button added as per modification plan -->
+                <button type="button" id="downloadButton" class="action-button" style="display:none;">Download JPG</button>
             </form>
         </div>
         <div class="manipulation-options">
@@ -27,7 +29,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('convertButton').addEventListener('click', function() {
+        document.getElementById('convertButton').addEventListener('click', async function() {
             const input = document.getElementById('imageInput');
             if(input.files.length === 0) {
                 alert('Please select a PNG image to convert.');
@@ -38,26 +40,38 @@
                 alert('The file must be a PNG image.');
                 return;
             }
-            // Assuming a function convertImageToJPG exists to handle the conversion
-            // This is a placeholder for actual conversion logic which would likely involve
-            // sending the file to a server for processing and then downloading the result
-            convertImageToJPG(file).then(() => {
+            let blobURL = ''; // Assuming declaration needed for further logic
+            try {
+                const conversionResult = await convertImageToJPG(file);
+                blobURL = conversionResult.blobURL; // Assuming conversionResult contains a blobURL
                 alert('Image has been converted to JPG format.');
-                // Code to download the converted image or display it to the user would go here
-            }).catch(error => {
+                // Code to make the download button visible
+                document.getElementById('downloadButton').style.display = 'block';
+                // Assuming triggerDownload is a function defined in download.js that handles the download process
+                document.getElementById('downloadButton').addEventListener('click', function() {
+                    triggerDownload(blobURL); // Modified to use blobURL instead
+                });
+            } catch (error) {
                 console.error('Error converting image:', error);
                 alert('Failed to convert image.');
-            });
+            }
         });
 
-        // Placeholder for actual conversion function
         async function convertImageToJPG(file) {
-            // Simulate a real conversion process
             console.log('Converting', file.name, 'to JPG format...');
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Simulates conversion delay
+            // Simulating file conversion and blob URL generation
+            const simulateBlobCreation = new Promise(resolve => setTimeout(() => {
+                const mockBlobURL = URL.createObjectURL(new Blob([file], {type: 'image/jpg'}));
+                resolve({blobURL: mockBlobURL});
+            }, 2000));
+            const result = await simulateBlobCreation;
             console.log(file.name, 'converted to JPG format.');
-            return Promise.resolve('Success'); // Simulates successful conversion
+            return Promise.resolve(result); // Modifying to return result with simulated blob URL
         }
     </script>
+    <!-- Linking the download.js file as per modification plan -->
+    <script src="download.js"></script>
+    <!-- Ensuring manipulation.js is correctly linked -->
+    <script src="manipulation.js"></script>
 </body>
 </html>
