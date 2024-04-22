@@ -18,6 +18,7 @@
             </form>
             <canvas id="canvas"></canvas>
             <div id="result" style="margin-top: 20px;"></div>
+            <button id="downloadButton" style="display:none;" onclick="downloadImage()">Download Filtered Image</button>
         </div>
     </div>
     <script>
@@ -26,6 +27,7 @@
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
             const resultDiv = document.getElementById('result');
+            const downloadButton = document.getElementById('downloadButton');
 
             if (fileInput.files.length > 0) {
                 const reader = new FileReader();
@@ -48,11 +50,7 @@
                         const image = new Image();
                         image.src = canvas.toDataURL("image/png");
                         resultDiv.appendChild(image);
-                        const downloadLink = document.createElement('a');
-                        downloadLink.innerText = 'Download Filtered Image';
-                        downloadLink.href = canvas.toDataURL("image/png");
-                        downloadLink.download = 'filtered_image.png';
-                        resultDiv.appendChild(downloadLink);
+                        downloadButton.style.display = 'block';
                     };
                     img.src = e.target.result;
                 };
@@ -61,6 +59,13 @@
                 alert('Please upload an image first.');
             }
         }
+
+        function downloadImage() {
+            const canvas = document.getElementById('canvas');
+            const downloadLink = document.createElement('a');
+            downloadLink.href = canvas.toDataURL("image/png");
+            downloadLink.download = 'filtered_image.png';
+            downloadLink.click();
+        }
     </script>
 </body>
-</html>
