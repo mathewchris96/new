@@ -1,1 +1,11 @@
-Certainly! Please provide the file you'd like me to make changes to along with the specific modifications you require.
+const image = require('image-processing-library');
+
+function uploadAndConvertImage(imageFile) {
+  try {
+    const uploadedImage = image.upload(imageFile);
+    const convertedImage = image.convert(uploadedImage);
+    return convertedImage;
+  } catch (error) {
+    console.error('Failed to convert the image. Error:', error);
+    return null;
+  }
