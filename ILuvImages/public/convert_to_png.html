@@ -33,7 +33,8 @@
                 return;
             }
             const file = input.files[0];
-            if(file.type !== 'image/jpeg') {
+            const imageType = file.type;
+            if (imageType !== 'image/jpeg') {
                 alert('The file must be a JPEG image.');
                 return;
             }
@@ -41,10 +42,15 @@
             // This is a placeholder for actual conversion logic which would likely involve
             // sending the file to a server for processing and then downloading the result
             convertImageToPNG(file).then(result => {
-                alert('Image has been converted to PNG format.');
-                const downloadLink = document.getElementById('downloadLink');
-                downloadLink.href = result;
-                downloadLink.click();
+                if (imageType === 'image/jpeg') {
+                    alert('Image has been converted to PNG format.');
+                    const downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = result;
+                    downloadLink.setAttribute('download', 'converted_image.png');
+                    downloadLink.style.display = 'block';
+                } else {
+                    alert('No conversion needed, the file is already in PNG format.');
+                }
             }).catch(error => {
                 console.error('Error converting image:', error);
                 alert('Failed to convert image.');
