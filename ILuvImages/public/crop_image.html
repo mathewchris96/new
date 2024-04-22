@@ -69,7 +69,7 @@
             const height = endY - startY;
             ctx.strokeStyle = 'red'; // Change the selection box outline color
             ctx.lineWidth = 2; // Change the selection box outline width
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(startX, startY, width, height); // Clear the selection box area
             ctx.strokeRect(startX, startY, width, height); // Draw the outline only
         }
 
