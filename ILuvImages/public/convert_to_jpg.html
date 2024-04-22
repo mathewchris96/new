@@ -15,6 +15,7 @@
             <form id="convertToJpgForm" class="manipulation-form">
                 <input type="file" id="imageInput" class="input-field" accept="image/png">
                 <button type="button" id="convertButton" class="action-button">Convert to JPG</button>
+                <a id="downloadLink" style="display: none" download="converted_image.jpg"></a>
             </form>
         </div>
         <div class="manipulation-options">
@@ -41,9 +42,11 @@
             // Assuming a function convertImageToJPG exists to handle the conversion
             // This is a placeholder for actual conversion logic which would likely involve
             // sending the file to a server for processing and then downloading the result
-            convertImageToJPG(file).then(() => {
+            convertImageToJPG(file).then(result => {
                 alert('Image has been converted to JPG format.');
-                // Code to download the converted image or display it to the user would go here
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = result;
+                downloadLink.click();
             }).catch(error => {
                 console.error('Error converting image:', error);
                 alert('Failed to convert image.');
@@ -56,8 +59,8 @@
             console.log('Converting', file.name, 'to JPG format...');
             await new Promise(resolve => setTimeout(resolve, 2000)); // Simulates conversion delay
             console.log(file.name, 'converted to JPG format.');
-            return Promise.resolve('Success'); // Simulates successful conversion
-        }
+            const result = 'data:image/jpeg;base64,converted_image_data'; // Replace with the actual converted image data
+            return Promise.resolve(result); // Simulates successful conversion
+        }   
     </script>
 </body>
-</html>
