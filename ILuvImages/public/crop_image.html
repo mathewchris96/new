@@ -47,13 +47,34 @@
             isDown = true;
         });
 
+        canvas.addEventListener('mousemove', function(e) {
+            if (isDown) {
+                endX = e.offsetX;
+                endY = e.offsetY;
+                drawSelectionBox(startX, startY, endX, endY);
+            }
+        });
+
         canvas.addEventListener('mouseup', function(e) {
             if (isDown) {
                 endX = e.offsetX;
                 endY = e.offsetY;
                 isDown = false;
-                cropImage();
+                drawSelectionBox(startX, startY, endX, endY);
+                cropButton.style.display = 'block';
             }
+        });
+
+        function drawSelectionBox(startX, startY, endX, endY) {
+            const width = endX - startX;
+            const height = endY - startY;
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(startX, startY, width, height);
+        }
+
+        cropButton.addEventListener('click', function() {
+            cropImage();
         });
 
         function cropImage() {
@@ -75,4 +96,3 @@
         });
     </script>
 </body>
-</html>
