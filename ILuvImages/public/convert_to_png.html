@@ -15,7 +15,7 @@
             <form id="conversionForm" class="manipulation-form">
                 <input type="file" id="imageInput" class="input-field" accept="image/jpeg">
                 <button type="button" id="convertButton" class="action-button">Convert to PNG</button>
-                <a id="downloadLink" style="display:none">Download</a>
+                <button type="button" id="downloadButton" class="action-button" style="display:none">Download</button>
             </form>
         </div>
     </div>
@@ -38,10 +38,14 @@
             convertImageToPNG(file).then(result => {
                 if (imageType === 'image/jpeg') {
                     alert('Image has been converted to PNG format.');
-                    const downloadLink = document.getElementById('downloadLink');
-                    downloadLink.href = result;
-                    downloadLink.setAttribute('download', 'converted_image.png');
-                    downloadLink.style.display = 'block';
+                    const downloadButton = document.getElementById('downloadButton');
+                    downloadButton.style.display = 'inline-block';
+                    downloadButton.addEventListener('click', function() {
+                        const link = document.createElement('a');
+                        link.href = result;
+                        link.download = 'converted_image.png';
+                        link.click();
+                    });
                 } else {
                     alert('No conversion needed, the file is already in PNG format.');
                 }
