@@ -3,57 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convert to PNG - ILuvImages</title>
+    <title>Convert to JPG - ILuvImages</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Convert Image to PNG Format</h1>
+            <h1>Convert Image to JPG Format</h1>
         </div>
         <div class="manipulation-page">
             <form id="conversionForm" class="manipulation-form">
-                <input type="file" id="imageInput" class="input-field" accept="image/jpeg">
-                <button type="button" id="convertButton" class="action-button">Convert to PNG</button>
+                <input type="file" id="imageInput" class="input-field" accept="image/png">
+                <button type="button" id="convertButton" class="action-button">Convert to JPG</button>
+                <a id="downloadLink" style="display:none">Download</a>
             </form>
+            <button class="option-button" onclick="location.href='resize_image.html'">Resize Image</button>
+            <button class="option-button" onclick="location.href='convert_to_png.html'">Convert to PNG</button>
+            <button class="option-button" onclick="location.href='convert_to_jpg.html'">Convert to JPG</button>
+            <button class="option-button" onclick="location.href='apply_filter.html'">Apply Filter</button>
+            <button class="option-button" onclick="location.href='compress_image.html'">Compress Image</button>
+            <button class="option-button" onclick="location.href='crop_image.html'">Crop Image</button>
         </div>
     </div>
     <script>
         document.getElementById('convertButton').addEventListener('click', function() {
             const input = document.getElementById('imageInput');
             if(input.files.length === 0) {
-                alert('Please select a JPG image to convert.');
+                alert('Please select a PNG image to convert.');
                 return;
             }
             const file = input.files[0];
-            if(file.type !== 'image/jpeg') {
-                alert('Please select a JPG image.');
+            if(file.type !== 'image/png') {
+                alert('The file must be a PNG image.');
                 return;
             }
-            // Assuming the server provides an API endpoint '/api/convert-to-png' for conversion
-            const formData = new FormData();
-            formData.append('image', file);
-
-            fetch('/api/convert-to-png', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = file.name.replace(/\.[^/.]+$/, "") + ".png"; // Change file extension to .png
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                alert('Conversion successful!');
-            })
-            .catch(err => {
-                console.error('Error:', err);
-                alert('Failed to convert the image.');
+            // Assuming a function convertImageToJPG exists to handle the conversion
+            // This is a placeholder for actual conversion logic which would likely involve
+            // sending the file to a server for processing and then downloading the result
+            convertImageToJPG(file).then(result => {
+                alert('Image has been converted to JPG format.');
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = result;
+                downloadLink.click();
+            }).catch(error => {
+                console.error('Error converting image:', error);
+                alert('Failed to convert image.');
             });
         });
+
+        // Placeholder for actual conversion function
+        async function convertImageToJPG(file) {
+            // Simulate a real conversion process
+            console.log('Converting', file.name, 'to JPG format...');
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Simulates conversion delay
+            console.log(file.name, 'converted to JPG format.');
+            const result = 'data:image/jpeg;base64,converted_image_data'; // Replace with the actual converted image data
+            return Promise.resolve(result); // Simulates successful conversion
+        }
     </script>
 </body>
-</html>
