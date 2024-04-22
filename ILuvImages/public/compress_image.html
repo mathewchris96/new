@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress Image - ILuvImages</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Compress Image</h1>
+        </div>
+        <div class="manipulation-page">
+            <form id="compression-form" class="manipulation-form">
+                <input type="file" id="imageInput" class="input-field" accept="image/*">
+                <label for="compressionLevel">Compression Level:</label>
+                <input type="range" id="compressionLevel" class="input-field" min="0" max="100" value="50">
+                <button type="button" id="compressButton" class="action-button">Compress Image</button>
+            </form>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('compressButton').addEventListener('click', function() {
+            const input = document.getElementById('imageInput');
+            const compressionLevel = document.getElementById('compressionLevel').value;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0, img.width, img.height);
+                        canvas.toBlob(function(blob) {
+                            const newImg = document.createElement('img');
+                            const url = URL.createObjectURL(blob);
+                            newImg.src = url;
+                            const resultDiv = document.getElementById('result');
+                            resultDiv.innerHTML = ''; // Clear previous results
+                            resultDiv.appendChild(newImg);
+                            
+                            const downloadButton = document.createElement('button');
+                            downloadButton.innerText = 'Download Compressed Image';
+                            downloadButton.style.backgroundColor = getComputedStyle(document.getElementById('compressButton')).backgroundColor;  // Set the same background color as the compress button
+                            downloadButton.onclick = function() {
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = 'compressed_image.jpg';  // Assuming compression to JPG
+                                a.click();
+                            };
+                            resultDiv.appendChild(downloadButton);
+                        }, 'image/jpeg', compressionLevel / 100);
+                    };
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                alert('Please select an image file first.');
+            }
+        });
+    </script>
+</body>
