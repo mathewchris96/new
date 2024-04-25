@@ -51,6 +51,7 @@ body, html {
 }
 
 /* Manipulation Options Page Styles */
+/* This section is designed to provide a cohesive user experience by aligning the styling with the rest of the application. */
 .manipulation-options {
   display: flex;
   flex-wrap: wrap;
@@ -72,7 +73,15 @@ body, html {
   background-color: #218838;
 }
 
+/* Styles specific for button IDs as per the review */
+#cropImageBtn,
+#resizeBtn,
+#applyFilterBtn {
+  font-weight: bold; /* Enhance visibility by making the text bold */
+}
+
 /* Individual Manipulation Pages Styles */
+/* Styles here are consistent with the manipulation options for a seamless experience. */
 .manipulation-page {
   text-align: center;
   padding: 40px 20px;
@@ -123,3 +132,4 @@ body, html {
   background-color: #f8f9fa;
   border-top: 1px solid #e0e0e0;
   font-weight: bold; /* Making the text bold */
+}
