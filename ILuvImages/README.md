@@ -2,6 +2,8 @@
 
 Welcome to the ILuvImages repository, the ultimate tool for your image manipulation and conversion needs. This repository is designed to help you easily convert images between popular formats, apply various filters, compress, and crop images to fit your requirements.
 
+This repository was created by Codeshwar for demonstration purpose.
+
 ## Main Features
 
 ILuvImages offers a wide range of features to enhance and manipulate your images:
@@ -41,4 +43,3 @@ To ensure a seamless navigation experience, all HTML files mentioned are linked 
 - [Cropping Images](./crop.html)
 
 Please ensure that all function names and IDs used in the `manipulation.js` file are consistent with those referenced in the HTML files and this README.md. Adjustments should be made in the code to ensure consistency across all files if necessary.
-```
