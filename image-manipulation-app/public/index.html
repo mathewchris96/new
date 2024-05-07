@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Manipulation App</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script defer src="js/main.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Image Manipulation App</h1>
+        </header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#upload">Upload Image</a></li>
+                <li><a href="#manipulate">Manipulate Image</a></li>
+            </ul>
+        </nav>
+        <section id="upload">
+            <form id="upload-form" class="upload-form">
+                <input type="file" id="file-input" name="image" accept="image/*">
+                <button type="submit">Upload Image</button>
+            </form>
+        </section>
+        <section id="manipulate" style="display:none;" class="manipulation-options">
+            <form class="manipulation-form" data-manipulation-type="resize">
+                <button type="submit" class="option-button">Resize Image</button>
+            </form>
+            <form class="manipulation-form" data-manipulation-type="convert-to-jpg">
+                <button type="submit" class="option-button">Convert to JPG</button>
+            </form>
+            <form class="manipulation-form" data-manipulation-type="convert-to-png">
+                <button type="submit" class="option-button">Convert to PNG</button>
+            </form>
+            <form class="manipulation-form" data-manipulation-type="apply-filter">
+                <button type="submit" class="option-button">Apply Filter</button>
+            </form>
+            <form class="manipulation-form" data-manipulation-type="crop">
+                <button type="submit" class="option-button">Crop Image</button>
+            </form>
+            <form class="manipulation-form" data-manipulation-type="compress">
+                <button type="submit" class="option-button">Compress Image</button>
+            </form>
+        </section>
+        <section id="result" style="display:none;" class="result-container">
+            <img id="result-image" src="" alt="Manipulated Image">
+            <a id="download-button" href="" download="manipulated-image">Download Image</a>
+        </section>
+    </div>
+</body>
+</html>
