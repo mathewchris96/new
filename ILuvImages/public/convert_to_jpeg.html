@@ -2,7 +2,34 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script type="text/javascript" src="manipulation.js"></script>
+  <script type="text/javascript">
+    function convertToJPEG() {
+      // Implement the function to convert jpg to jpeg
+      // You can use any image manipulation library or method for this conversion
+      // Example:
+      // const jpgFile = document.getElementById('jpgUpload').files[0];
+      // const canvas = document.createElement('canvas');
+      // const ctx = canvas.getContext('2d');
+      // const img = new Image();
+      // img.onload = function() {
+      //   canvas.width = img.width;
+      //   canvas.height = img.height;
+      //   ctx.drawImage(img, 0, 0);
+      //   const dataURL = canvas.toDataURL('image/jpeg');
+      //   // Save dataURL as jpeg or perform any other necessary action
+      // };
+      // img.src = URL.createObjectURL(jpgFile);
+    }
+
+    function downloadJPEG() {
+      // Implement the function to download the converted image
+      // Example:
+      // const downloadLink = document.createElement('a');
+      // downloadLink.href = dataURL; // Use the dataURL obtained after conversion
+      // downloadLink.download = 'converted_image.jpeg';
+      // downloadLink.click();
+    }
+  </script>
 </head>
 <body>
   <form id="jpgForm">
@@ -11,4 +38,3 @@
     <button type="button" id="downloadBtn" onclick="downloadJPEG()">Download JPEG</button>
   </form>
 </body>
-</html>
