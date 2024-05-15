@@ -104,6 +104,43 @@ body, html {
   background-color: #138496;
 }
 
+/* Adding reusable button class for consistency */
+.button {
+  background-color: #007bff; /* Blue theme color */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Adding form input class for consistency */
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Specific styles for convertToJpegPageLink to match application theme */
+#convertToJpegPageLink {
+  background-color: #17a2b8; /* Using a different color for distinction */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#convertToJpegPageLink:hover {
+  background-color: #138496;
+}
+
 /* Responsive Layout */
 @media (max-width: 768px) {
   .manipulation-options {
@@ -123,3 +160,4 @@ body, html {
   background-color: #f8f9fa;
   border-top: 1px solid #e0e0e0;
   font-weight: bold; /* Making the text bold */
+}
