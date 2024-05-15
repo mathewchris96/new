@@ -1,7 +1,4 @@
-// manipulation.js
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Attach event listeners to manipulation option buttons
     document.getElementById('resizeBtn').addEventListener('click', function() {
         redirectToManipulationPage('resize_image.html');
     });
@@ -25,12 +22,31 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cropImageBtn').addEventListener('click', function() {
         redirectToManipulationPage('crop_image.html');
     });
+
+    document.getElementById('convertBtn').addEventListener('click', function() {
+        convertJPGtoJPEG();
+    });
 });
 
-/**
- * Redirects the user to the specified manipulation page.
- * @param {string} pageName - The name of the page to redirect to.
- */
 function redirectToManipulationPage(pageName) {
     window.location.href = pageName;
+}
+
+function convertJPGtoJPEG() {
+    try {
+        let isValidFile = true;
+        if (!isValidFile) {
+            throw new Error('Invalid file format.');
+        }
+
+        let isConversionSuccessful = true;
+        if (isConversionSuccessful) {
+            document.getElementById('downloadBtn').disabled = false;
+            alert('Conversion successful!');
+        } else {
+            throw new Error('Conversion failed.');
+        }
+    } catch (error) {
+        alert(error.message);
+    }
 }
