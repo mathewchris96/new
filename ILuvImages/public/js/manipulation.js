@@ -1,7 +1,4 @@
-// manipulation.js
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Attach event listeners to manipulation option buttons
     document.getElementById('resizeBtn').addEventListener('click', function() {
         redirectToManipulationPage('resize_image.html');
     });
@@ -10,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         redirectToManipulationPage('convert_to_png.html');
     });
 
-    document.getElementById('convertToJpgBtn').addEventListener('click', function() {
-        redirectToManipulationPage('convert_to_jpg.html');
+    document.getElementById('convertToJpegBtn').addEventListener('click', function() {
+        convertImageToJPEG();
     });
 
     document.getElementById('applyFilterBtn').addEventListener('click', function() {
@@ -27,10 +24,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-/**
- * Redirects the user to the specified manipulation page.
- * @param {string} pageName - The name of the page to redirect to.
- */
 function redirectToManipulationPage(pageName) {
     window.location.href = pageName;
+}
+
+function convertImageToJPEG() {
+    const fileInput = document.getElementById('imageInput');
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (file.type === "image/jpeg" || file.type === "image/jpg") {
+            console.log("Converting image...");
+            console.log("Download link for the converted image would be generated here.");
+        } else {
+            alert("Please upload a JPG image.");
+        }
+    } else {
+        alert("Please select an image to convert.");
+    }
 }
