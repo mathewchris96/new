@@ -10,7 +10,7 @@
 
 <body>
     <input type="file" id="imageUpload" accept="image/*">
-    <img id="imageToRotate" src="image.jpg" alt="Rotatable Image">
+    <img id="imageToRotate" alt="Rotatable Image">
     <button id="rotateButton">Rotate</button>
     <button id="downloadButton" download="rotated_image.jpg">Download</button>
 
@@ -20,7 +20,10 @@
             const file = event.target.files[0];
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('imageToRotate').src = e.target.result;
+                const image = document.getElementById('imageToRotate');
+                image.src = e.target.result; // Set the uploaded image as the source
+                image.setAttribute('data-rotation', 0); // Reset data-rotation attribute
+                image.style.transform = 'rotate(0deg)'; // Reset the image rotation
             }
             reader.readAsDataURL(file);
         });
@@ -37,13 +40,16 @@
         });
 
         document.getElementById('downloadButton').addEventListener('click', function() {
-            const imageSource = document.getElementById('imageToRotate').getAttribute('src');
+            const image = document.getElementById('imageToRotate');
+            const imageSource = image.getAttribute('src');
             const link = document.createElement('a');
             link.href = imageSource;
             link.download = 'rotated_image.jpg';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            image.setAttribute('data-rotation', 0); // Reset data-rotation attribute after download
+            image.style.transform = 'rotate(0deg)'; // Reset the image rotation after download
         });
     </script>
 </body>
