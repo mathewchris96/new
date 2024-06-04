@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotate Image</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="image-upload">Upload an image:</label>
+        <input type="file" id="image-upload" name="image" required>
+        
+        <label for="rotation-angle">Rotation Angle:</label>
+        <input type="range" id="rotation-angle" name="angle" min="0" max="360" value="0">
+        
+        <button type="button" id="apply-rotation">Apply Rotation</button>
+        <button type="button" id="download-image">Download Image</button>
+    </form>
+
+    <script src="js/upload.js"></script>
+    <script>
+        document.getElementById('apply-rotation').addEventListener('click', function() {
+            const image = document.getElementById('image-upload').files[0];
+            const angle = document.getElementById('rotation-angle').value;
+            rotateImage(image, angle);
+        });
+        
+        document.getElementById('download-image').addEventListener('click', function() {
+            console.log("Downloading the rotated image.");
+            
+            const rotatedImage = document.getElementById('image-upload').files[0];
+            if(rotatedImage) {
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(rotatedImage);
+                link.download = 'rotated_image.jpg';
+                link.click();
+            } else {
+                console.error("No rotated image available to download.");
+            }
+        });
+    </script>
+</body>
