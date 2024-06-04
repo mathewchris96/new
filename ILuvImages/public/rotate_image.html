@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotate and Download Image</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img id="imageToRotate" src="image.jpg" alt="Rotatable Image">
+    <button id="rotateButton">Rotate</button>
+    <button id="downloadButton" download="rotated_image.jpg">Download</button>
+
+    <script src="rotate.js"></script>
+    <script>
+        document.getElementById('rotateButton').addEventListener('click', function() {
+            // Implement rotate logic here
+            const image = document.getElementById('imageToRotate');
+            let rotation = parseInt(image.getAttribute('data-rotation') || 0);
+            rotation += 90;
+            if(rotation >= 360) {
+                rotation = 0;
+            }
+            image.style.transform = `rotate(${rotation}deg)`;
+            image.setAttribute('data-rotation', rotation);
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            // Implement download logic here
+            const imageSource = document.getElementById('imageToRotate').getAttribute('src');
+            const link = document.createElement('a');
+            link.href = imageSource;
+            link.download = 'rotated_image.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+
+</html>
+```
