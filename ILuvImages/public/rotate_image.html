@@ -4,19 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rotate and Download Image</title>
+    <title>Rotate, Upload, and Download Image</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <input type="file" id="imageUpload" accept="image/*">
     <img id="imageToRotate" src="image.jpg" alt="Rotatable Image">
     <button id="rotateButton">Rotate</button>
     <button id="downloadButton" download="rotated_image.jpg">Download</button>
 
     <script src="rotate.js"></script>
     <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imageToRotate').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+
         document.getElementById('rotateButton').addEventListener('click', function() {
-            // Implement rotate logic here
             const image = document.getElementById('imageToRotate');
             let rotation = parseInt(image.getAttribute('data-rotation') || 0);
             rotation += 90;
@@ -28,7 +37,6 @@
         });
 
         document.getElementById('downloadButton').addEventListener('click', function() {
-            // Implement download logic here
             const imageSource = document.getElementById('imageToRotate').getAttribute('src');
             const link = document.createElement('a');
             link.href = imageSource;
@@ -41,4 +49,3 @@
 </body>
 
 </html>
-```
