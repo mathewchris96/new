@@ -49,4 +49,3 @@ function enableImageDowload() {
 document.getElementById('uploadForm').addEventListener('submit', handleImageUpload);
 document.getElementById('rotateButton').addEventListener('click', rotateImage);
 document.getElementById('downloadButton').addEventListener('click', enableImageDowload);
-```
