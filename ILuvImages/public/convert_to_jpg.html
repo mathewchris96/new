@@ -15,6 +15,7 @@
             <form id="convertToJpgForm" class="manipulation-form">
                 <input type="file" id="imageInput" class="input-field" accept="image/png">
                 <button type="button" id="convertButton" class="action-button">Convert to JPG</button>
+                <button type="button" id="convertToPdfButton" class="action-button">Convert to PDF</button>
                 <button type="button" id="downloadButton" class="action-button" style="display: none;">Download JPG</button>
             </form>
         </div>
@@ -22,6 +23,7 @@
             <!-- Buttons removed as per the request -->
         </div>
     </div>
+    <script src="js/imageToPdf.js" type="module"></script>
     <script>
         document.getElementById('convertButton').addEventListener('click', function() {
             const input = document.getElementById('imageInput');
@@ -34,15 +36,11 @@
                 alert('The file must be a PNG image.');
                 return;
             }
-            // Assuming a function convertImageToJPG exists to handle the conversion
-            // This is a placeholder for actual conversion logic which would likely involve
-            // sending the file to a server for processing and then downloading the result
             convertImageToJPG(file).then((result) => {
                 alert('Image has been converted to JPG format.');
                 const downloadButton = document.getElementById('downloadButton');
                 downloadButton.style.display = 'block';
                 downloadButton.addEventListener('click', function() {
-                    // Simulate download by using a dummy link (replace with actual download logic)
                     const url = window.URL.createObjectURL(result);
                     const a = document.createElement('a');
                     a.href = url;
@@ -58,15 +56,37 @@
             });
         });
 
-        // Placeholder for actual conversion function
+        document.getElementById('convertToPdfButton').addEventListener('click', function() {
+            const input = document.getElementById('imageInput');
+            if(input.files.length === 0) {
+                alert('Please select an image to convert.');
+                return;
+            }
+            const file = input.files[0];
+            convertImageToPDF(file).then((result) => {
+                alert('Image has been converted to PDF format.');
+                // Logic for downloading the PDF file goes here
+                const url = window.URL.createObjectURL(result);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'converted_image.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            }).catch(error => {
+                console.error('Error converting image to PDF:', error);
+                alert('Failed to convert image to PDF.');
+            });
+        });
+
         async function convertImageToJPG(file) {
-            // Simulate a real conversion process
             console.log('Converting', file.name, 'to JPG format...');
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Simulates conversion delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
             console.log(file.name, 'converted to JPG format.');
-            // Simulate result as a Blob (replace with actual result)
             const result = new Blob(['Sample JPG content'], { type: 'image/jpeg' });
-            return Promise.resolve(result); // Simulates successful conversion
+            return Promise.resolve(result);
         }
     </script>
 </body>
+</html>
