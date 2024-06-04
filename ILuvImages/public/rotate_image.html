@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Rotate Image</title>
+</head>
+<body>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="uploadButton" accept="image/*">
+    <button type="submit">Upload Image</button>
+  </form>
+  <canvas id="imageCanvas"></canvas>
+  <button id="rotateButton">Rotate Image</button>
+  <a id="downloadButton" download="rotated_image.jpg">Download Rotated Image</a>
+
+  <script src="rotate_image.js"></script>
+</body>
+</html>

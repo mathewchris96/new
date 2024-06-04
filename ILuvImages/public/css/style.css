@@ -37,7 +37,7 @@ body, html {
   padding: 10px;
 }
 
-.upload-button {
+#uploadButton {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -46,7 +46,7 @@ body, html {
   transition: background-color 0.3s ease;
 }
 
-.upload-button:hover {
+#uploadButton:hover {
   background-color: #0056b3;
 }
 
@@ -123,3 +123,42 @@ body, html {
   background-color: #f8f9fa;
   border-top: 1px solid #e0e0e0;
   font-weight: bold; /* Making the text bold */
+}
+
+/* New Styles for rotate_image.html */
+.rotate-image-form {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#rotateButton, #downloadButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#rotateButton:hover, #downloadButton:hover {
+  background-color: #0056b3;
+}
+
+/* Styles for New Link/Button on index.html for Consistency */
+.index-link-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.index-link-button:hover {
+  background-color: #218838;
+}
+
+/* Responsive Layout Adjustments */
+@media (max-width: 768px) {
+  /* Adjustments for new elements if necessary */
+}
