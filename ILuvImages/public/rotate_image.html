@@ -9,19 +9,27 @@
 <body>
     <div class="image-container">
         <img id="imageToRotate" src="path/to/your/image.jpg" alt="Rotatable Image">
+        <input type="file" id="imageInput" accept="image/*">
         <button id="rotateButton">Rotate Image</button>
         <button id="downloadButton">Download Image</button>
     </div>
     <script src="js/rotate.js"></script>
     <script>
         document.getElementById('rotateButton').addEventListener('click', function() {
-            // Replace this comment with code to rotate the image 90 degrees clockwise
             rotateImage('imageToRotate', 90);
         });
 
         document.getElementById('downloadButton').addEventListener('click', function() {
-            // Replace this comment with code to trigger download of the rotated image
             downloadImage('imageToRotate');
+        });
+
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imageToRotate').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         });
 
         function rotateImage(imageId, degrees) {
@@ -43,4 +51,3 @@
         }
     </script>
 </body>
-</html>
