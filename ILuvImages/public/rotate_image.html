@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Rotator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="image-container">
+        <img id="imageToRotate" src="path/to/your/image.jpg" alt="Rotatable Image">
+        <button id="rotateButton">Rotate Image</button>
+        <button id="downloadButton">Download Image</button>
+    </div>
+    <script src="js/rotate.js"></script>
+    <script>
+        document.getElementById('rotateButton').addEventListener('click', function() {
+            // Replace this comment with code to rotate the image 90 degrees clockwise
+            rotateImage('imageToRotate', 90);
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            // Replace this comment with code to trigger download of the rotated image
+            downloadImage('imageToRotate');
+        });
+
+        function rotateImage(imageId, degrees) {
+            var img = document.getElementById(imageId);
+            var currentDeg = img.style.transform.replace(/[^0-9.]/g, '') || 0;
+            var newDeg = parseInt(currentDeg) + degrees;
+            img.style.transform = 'rotate(' + newDeg + 'deg)';
+        }
+
+        function downloadImage(imageId) {
+            var img = document.getElementById(imageId);
+            var url = img.src;
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'rotated-image.jpg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
