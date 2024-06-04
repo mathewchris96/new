@@ -23,20 +23,21 @@
         document.getElementById('apply-rotation').addEventListener('click', function() {
             const image = document.getElementById('image-upload').files[0];
             const angle = document.getElementById('rotation-angle').value;
-            rotateImage(image, angle); // Implement your rotateImage function in upload.js
+            rotateImage(image, angle);
         });
-        
-        function rotateImage(image, angle) {
-            // Basic rotation logic (placeholder)
-            console.log(`Rotating image by ${angle} degrees.`);
-            // You should replace this with actual image rotation logic
-        }
         
         document.getElementById('download-image').addEventListener('click', function() {
             console.log("Downloading the rotated image.");
-            // Implement your image download logic here
+            
+            const rotatedImage = document.getElementById('image-upload').files[0];
+            if(rotatedImage) {
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(rotatedImage);
+                link.download = 'rotated_image.jpg';
+                link.click();
+            } else {
+                console.error("No rotated image available to download.");
+            }
         });
     </script>
 </body>
-</html>
-```
