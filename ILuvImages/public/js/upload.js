@@ -1,44 +1,46 @@
-// upload.js
-
 document.addEventListener("DOMContentLoaded", function() {
-    // Select the file input and the form element
     const fileInput = document.getElementById("file-input");
+    const convertBtn = document.getElementById("convertBtn");
     const uploadForm = document.getElementById("upload-form");
+    const downloadButton = document.getElementById("download-pdf-button");
 
-    // Listen for file input change events
-    fileInput.addEventListener("change", function() {
-        // Check if files are selected
-        if (this.files && this.files[0]) {
-            // Instantiate FormData object
-            const formData = new FormData();
-            // Append the file to the FormData object
-            formData.append("image", this.files[0]);
+    downloadButton.disabled = true;
 
-            // Perform the AJAX request to upload the image
-            fetch("/upload", {
-                method: "POST",
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Check if the upload was successful
-                if (data.success) {
-                    // Redirect to the manipulation options page
-                    window.location.href = "/manipulation_options.html";
-                } else {
-                    // Handle errors or unsuccessful uploads
-                    alert("Failed to upload image. Please try again.");
-                }
-            })
-            .catch(error => {
-                console.error("Error uploading image:", error);
-                alert("An error occurred while uploading the image.");
+    convertBtn.addEventListener("click", function() {
+        if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+            if (file.type !== "image/jpeg") {
+                alert("Only JPEG files are supported.");
+                return;
+            }
+
+            simulateConversionToPDF(file).then((pdfFile) => {
+                downloadButton.disabled = false;
+
+                downloadButton.href = pdfFile; // Assuming a URL or data URI is returned for simplicity
+                downloadButton.download = "converted_file.pdf";
+                downloadButton.addEventListener("click", function() {
+                    console.log("Downloading PDF...");
+                });
+
+                alert("File converted to PDF successfully. You can now download the PDF.");
+            }).catch(error => {
+                console.error("Error converting file:", error);
+                alert("An error occurred during the conversion process.");
             });
         }
     });
 
-    // Prevent the form from submitting traditionally
     uploadForm.addEventListener("submit", function(event) {
         event.preventDefault();
     });
+
+    function simulateConversionToPDF(file) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const pdfFile = "path_to_converted_file.pdf"; // Assuming the file path or data URI for the converted PDF
+                resolve(pdfFile);
+            }, 1000);
+        });
+    }
 });
