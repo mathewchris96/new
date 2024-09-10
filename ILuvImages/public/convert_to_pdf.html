@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Convert JPEG to PDF - ILuvImages</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
+    <button type="button" id="convertBtn" onclick="convertImageToPDF()">Convert to PDF</button>
+    <button type="button" id="downloadBtn" style="display:none">Download PDF</button>
+  </form>
+
+  <script src="js/upload.js"></script>
+  <script>
+    function convertImageToPDF() {
+      var fileInput = document.getElementById('fileToUpload');
+      var file = fileInput.files[0];
+      if (file && file.type === "image/jpeg") {
+        // Assume a function for conversion exists and returns a boolean success value
+        var conversionSuccess = true; // This should be replaced with actual conversion logic
+        if(conversionSuccess) {
+          document.getElementById('downloadBtn').style.display = 'block';
+        } else {
+          alert("Failed to convert the image to PDF.");
+        }
+      } else {
+        alert("Please upload a JPEG image.");
+      }
+    }
+  </script>
+</body>
+</html>
