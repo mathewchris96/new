@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Conversion</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/upload.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Image Manipulation App</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="resize.html">Resize</a></li>
+                <li><a href="convert.html">Convert</a></li>
+                <li><a href="compress.html">Compress</a></li>
+                <li><a href="filter.html">Apply Filter</a></li>
+                <li><a href="crop.html">Crop</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Convert Image Format</h2>
+        <p>Select an image to convert between JPG and PNG formats.</p>
+        <form id="upload-form">
+            <div class="form-group">
+                <label for="file-input">Upload Image:</label>
+                <input type="file" id="file-input" name="image" accept="image/jpeg, image/png">
+            </div>
+            <div class="form-group">
+                <label for="format-select">Select Format:</label>
+                <select id="format-select" name="format">
+                    <option value="jpg">Convert to JPG</option>
+                    <option value="png">Convert to PNG</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Convert Image</button>
+        </form>
+        <div id="result-section" style="display:none;">
+            <h3>Converted Image</h3>
+            <img id="converted-image" src="" alt="Converted Image" style="max-width: 100%;">
+            <a id="download-link" href="" download>Download Converted Image</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const uploadForm = document.getElementById("upload-form");
+            const fileInput = document.getElementById("file-input");
+            const formatSelect = document.getElementById("format-select");
+            const resultSection = document.getElementById("result-section");
+            const convertedImage = document.getElementById("converted-image");
+            const downloadLink = document.getElementById("download-link");
+
+            uploadForm.addEventListener("submit", async function(event) {
+                event.preventDefault();
+                const file = fileInput.files[0];
+                if (!file) {
+                    alert("Please select a file to upload.");
+                    return;
+                }
+
+                const format = formatSelect.value;
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('format', format);
+
+                try {
+                    const response = await fetch('/convert', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (!response.ok) throw new Error('Conversion failed');
+
+                    const result = await response.json();
+                    convertedImage.src = result.convertedImageUrl;
+                    downloadLink.href = result.convertedImageUrl;
+                    downloadLink.download = `converted-image.${format}`;
+                    resultSection.style.display = 'block';
+                } catch (error) {
+                    console.error('Error converting file:', error);
+                    alert('Error converting file. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```

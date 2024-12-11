@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Image</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="upload.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Image Manipulation App</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/manipulate/resize.html">Resize</a></li>
+                <li><a href="/manipulate/convert.html">Convert</a></li>
+                <li><a href="/manipulate/compress.html">Compress</a></li>
+                <li><a href="/manipulate/filter.html">Apply Filter</a></li>
+                <li><a href="/manipulate/crop.html">Crop</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Crop Your Image</h2>
+        <p>Select an image to crop.</p>
+        <form id="upload-form">
+            <div class="form-group">
+                <label for="file-input">Upload Image:</label>
+                <input type="file" id="file-input" accept="image/png, image/jpeg">
+            </div>
+            <button type="submit" class="btn">Upload</button>
+        </form>
+        <div id="crop-container">
+            <canvas id="crop-canvas"></canvas>
+        </div>
+        <button id="crop-btn" class="btn">Crop</button>
+        <button id="download-btn" class="btn">Download</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const canvas = document.getElementById('crop-canvas');
+            const ctx = canvas.getContext('2d');
+            let img = new Image();
+            let cropBtn = document.getElementById('crop-btn');
+            let downloadBtn = document.getElementById('download-btn');
+            let startX, startY, endX, endY;
+            let isDown = false;
+
+            let uploadedImageUrl = ''; 
+
+            function drawImageOnCanvas(imageUrl) {
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = imageUrl;
+            }
+
+            canvas.addEventListener('mousedown', (e) => {
+                isDown = true;
+                [startX, startY] = [e.offsetX, e.offsetY];
+            });
+
+            canvas.addEventListener('mouseup', (e) => {
+                if (isDown) {
+                    isDown = false;
+                    [endX, endY] = [e.offsetX, e.offsetY];
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'red';
+                    ctx.lineWidth = 2;
+                    ctx.rect(startX, startY, endX - startX, endY - startY);
+                    ctx.stroke();
+                }
+            });
+
+            cropBtn.addEventListener('click', () => {
+                if (startX !== undefined) {
+                    const width = endX - startX;
+                    const height = endY - startY;
+                    const croppedImage = ctx.getImageData(startX, startY, width, height);
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.putImageData(croppedImage, 0, 0);
+                }
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                const dataURL = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = dataURL;
+                a.download = 'cropped-image.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        });
+    </script>
+</body>
+</html>

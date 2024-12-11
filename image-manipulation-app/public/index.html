@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Manipulation App</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script defer src="scripts/upload.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Image Manipulation App</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="manipulate/resize.html">Resize</a></li>
+            <li><a href="manipulate/convert.html">Convert</a></li>
+            <li><a href="manipulate/compress.html">Compress</a></li>
+            <li><a href="manipulate/filter.html">Apply Filter</a></li>
+            <li><a href="manipulate/crop.html">Crop</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <form id="upload-form">
+            <div class="form-group">
+                <label for="file-input">Upload Image:</label>
+                <input type="file" id="file-input" name="image" accept="image/png, image/jpeg">
+            </div>
+            <button type="submit" class="btn">Upload</button>
+        </form>
+    </div>
+</body>
+</html>
