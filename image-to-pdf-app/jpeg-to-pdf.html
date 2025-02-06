@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert JPEG to PDF</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Convert Your JPEG Images to PDF</h1>
+        <nav>
+            <button onclick="window.location.href='index.html'">Home</button>
+        </nav>
+    </header>
+    <main>
+        <section class="conversion-section">
+            <p>Select a JPEG file from your device and click on "Convert to PDF" to start the conversion process.</p>
+            <input type="file" id="jpeg-upload" accept="image/jpeg">
+            <button id="convert-button">Convert to PDF</button>
+            <a id="download-link" style="display: none;">Download PDF</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Image to PDF Converter</p>
+    </footer>
+</body>
+</html>
