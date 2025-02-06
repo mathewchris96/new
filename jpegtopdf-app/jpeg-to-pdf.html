@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPEG to PDF Converter</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/convert-to-pdf.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>JPEG to PDF Converter</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="jpeg-to-pdf.html">Convert to PDF</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Convert Your JPEG to PDF</h2>
+            <p>Select a JPEG image from your device to convert it into a PDF document.</p>
+            <form id="jpeg-to-pdf-form" method="post" enctype="multipart/form-data">
+                <input type="file" id="file-input" accept="image/jpeg">
+                <button type="button" id="convert-btn">Convert to PDF</button>
+            </form>
+            <div id="download-container"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 JPEG to PDF Converter</p>
+    </footer>
+    <script>
+        document.getElementById('convert-btn').addEventListener('click', function() {
+            var fileInput = document.getElementById('file-input');
+            if(fileInput.files.length > 0) {
+                handleFileUpload(fileInput.files);
+            } else {
+                alert("Please select a file first.");
+            }
+        });
+
+        function handleFileUpload(files) {
+            // Basic implementation for demonstration.
+            // Assume this function handles the file upload and conversion logic.
+            console.log("Handling file upload and conversion", files);
+            // Add logic here for uploading and converting files
+        }
+    </script>
+</body>
+</html>

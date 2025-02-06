@@ -1,0 +1,97 @@
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Navigation Bar */
+nav ul {
+    background-color: #444;
+    list-style-type: none;
+    text-align: center;
+    padding: 10px 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* Buttons */
+#convert-btn {
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#convert-btn:hover {
+    background-color: #449d44;
+}
+
+/* Form Elements */
+#file-input {
+    margin: 20px 0;
+    padding: 10px;
+    border: 2px dashed #ccc;
+    display: block;
+    width: 98%; /* Slightly less than 100% to account for padding and borders */
+}
+
+/* PDF Download Section */
+#download-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #dff0d8;
+    border: 1px solid #d0e9c6;
+    border-radius: 5px;
+    display: none; /* Initially hidden; will be displayed after PDF conversion */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    #convert-btn {
+        width: 100%;
+        padding: 15px;
+    }
+
+    #file-input {
+        width: 100%;
+    }
+}
